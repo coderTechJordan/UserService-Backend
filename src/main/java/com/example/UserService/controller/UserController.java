@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    
+
     private final List<User> userList = new ArrayList<>();
 
     @PostMapping
