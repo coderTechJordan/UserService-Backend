@@ -1,0 +1,8 @@
+com/example/UserService/model/NewPassword.class
+com/example/UserService/model/UserIdentification.class
+com/example/UserService/UserServiceApplication.class
+com/example/UserService/dynamodb/PutUserItem.class
+com/example/UserService/model/UserCredentials.class
+com/example/UserService/controller/UserController.class
+com/example/UserService/model/User.class
+com/example/UserService/LambdaHandler.class

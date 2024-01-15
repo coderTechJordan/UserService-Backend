@@ -1,0 +1,97 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'Jordan-UserService
+
+  Sample SAM Template for Jordan-UserService
+
+  '
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 128
+Resources:
+  JordanUserServiceAPIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: Dev
+      Name: JordanUserServiceAPIGateway
+    Metadata:
+      SamResourceId: JordanUserServiceAPIGateway
+  JordanUserService:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://jordan-user-service-s3/a95dcbb585d96e4898d40a797bde590e
+      Handler: com.example.UserService.LambdaHandler::handleRequest
+      Runtime: java11
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          PARAM1: VALUE
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        CreateUser:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: POST
+        ListUsers:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: GET
+        GetUserById:
+          Type: Api
+          Properties:
+            Path: /users/{userId}
+            Method: GET
+        UpdateUser:
+          Type: Api
+          Properties:
+            Path: /users/{userId}
+            Method: PUT
+        DeleteUser:
+          Type: Api
+          Properties:
+            Path: /users/{userId}
+            Method: DELETE
+        UserAuthentication:
+          Type: Api
+          Properties:
+            Path: /auth/login
+            Method: POST
+        UserLogout:
+          Type: Api
+          Properties:
+            Path: /auth/logout
+            Method: POST
+        ChangePassword:
+          Type: Api
+          Properties:
+            Path: /users/{userId}/changepassword
+            Method: PUT
+        ResetPassword:
+          Type: Api
+          Properties:
+            Path: /users/resetpassword
+            Method: POST
+    Metadata:
+      SamResourceId: JordanUserService
+Outputs:
+  JordanUserServiceApi:
+    Description: API Gateway endpoint URL for Dev stage for Jordan-UserService function
+    Value:
+      Fn::Sub: https://${JordanUserServiceAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/Dev/users/
+  JordanUserService:
+    Description: Jordan-UserService Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - JordanUserService
+      - Arn
+  JordanUserServiceIamRole:
+    Description: Implicit IAM Role created for Jordan-UserService function
+    Value:
+      Fn::GetAtt:
+      - JordanUserServiceRole
+      - Arn

@@ -1,0 +1,9 @@
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/model/NewPassword.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/model/User.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/LambdaHandler.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/UserServiceApplication.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/controller/UserController.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/model/UserCredentials.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/model/UserIdentification.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/config/SwaggerConfig.java
+/mnt/c/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example/UserService/dynamodb/PutUserItem.java
