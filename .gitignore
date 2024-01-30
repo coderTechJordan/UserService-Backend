@@ -1,0 +1,66 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# It's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+#######################
+*.log
+*.sql
+*.sqlite
+
+# Workspace files #
+###################
+*.swp
+*.bak
+*.tmp
+
+# IDE-specific files #
+######################
+.idea/
+.vscode/
+
+# Maven specific files #
+########################
+target/
+build/
+mvnw
+mvnw.cmd
+
+# Ignore generated files from Maven #
+######################################
+*.iml
+*.ipr
+*.iws
+.mvn/
+HELP.md
+
+# Ignore SAM specific files #
+##############################
+.sam/
+.sam.local/
+.sam.old/
+
+# Ignore cloudformation files #
+###############################
+.sam/
+.sam.local/
+.sam.old/
+template.yaml

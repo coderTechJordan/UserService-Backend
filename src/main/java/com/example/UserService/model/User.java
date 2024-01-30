@@ -1,24 +1,56 @@
 package com.example.UserService.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     @Schema(description = "")
-    private String userId; // Assuming ID is of type Long
+    @JsonProperty("userId")
+    private String userId;
 
     @Schema(description = "")
+    @JsonProperty("firstName")
+    private String firstName;
+
+    @Schema(description = "")
+    @JsonProperty("lastName")
+    private String lastName;
+
+    @Schema(description = "")
+    @JsonProperty("username")
     private String username;
 
     @Schema(description = "")
+    @JsonProperty("password")
     private String password;
 
     @Schema(description = "")
+    @JsonProperty("email")
     private String email;
 
     @Schema(description = "")
+    @JsonProperty("createdAt")
     private String createdAt;
 
-    // Getter and setter for ID
+    @JsonCreator
+    public User(@JsonProperty("userId") String userId,
+                @JsonProperty("firstName") String firstName,
+                @JsonProperty("lastName") String lastName,
+                @JsonProperty("username") String username,
+                @JsonProperty("password") String password,
+                @JsonProperty("email") String email,
+                @JsonProperty("createdAt") String createdAt) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
+
     public String getUserId() {
         return userId;
     }
@@ -27,7 +59,22 @@ public class User {
         this.userId = userId;
     }
 
-    // Getters and setters for other fields
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -58,5 +105,18 @@ public class User {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
     }
 }

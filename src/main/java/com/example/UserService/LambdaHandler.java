@@ -7,26 +7,57 @@ import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class LambdaHandler implements RequestStreamHandler {
+
     private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+
     static {
         try {
             handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(UserServiceApplication.class);
-            // If you are using HTTP APIs with the version 2.0 of the proxy model, use the getHttpApiV2ProxyHandler
-            // method: handler = SpringBootLambdaContainerHandler.getHttpApiV2ProxyHandler(Application.class);
         } catch (ContainerInitializationException e) {
-            // if we fail here. We re-throw the exception to force another cold start
-            e.printStackTrace();
+            // Handle initialization error
             throw new RuntimeException("Could not initialize Spring Boot application", e);
         }
     }
 
     @Override
     public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context) throws IOException {
-        handler.proxyStream(inputStream, outputStream, context);
+        LambdaLogger logger = context.getLogger();
+        try {
+            logger.log("Handling Lambda request");
+
+            ByteArrayOutputStream proxyOutputStream = new ByteArrayOutputStream();
+            handler.proxyStream(inputStream, proxyOutputStream, context);
+            byte[] responseBytes = proxyOutputStream.toByteArray();
+
+            logRequest(inputStream, logger);
+
+            outputStream.write(responseBytes);
+        } catch (IOException e) {
+
+            logger.log("Error handling Lambda request: " + e.getMessage());
+            outputStream.write("Error processing request: Input/output issue".getBytes());
+        } catch (Exception e) {
+            logger.log("Error handling Lambda request: " + e.getMessage());
+            outputStream.write("Error processing request: Unexpected error occurred".getBytes());
+        } finally {
+            logger.log("Lambda execution completed");
+            outputStream.close();
+        }
+    }
+
+
+    private void logRequest(InputStream inputStream, LambdaLogger logger) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder requestPayload = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            requestPayload.append(line).append("\n");
+        }
+        logger.log("Incoming request payload:\n" + requestPayload.toString());
     }
 }

@@ -15,6 +15,12 @@ Resources:
     Properties:
       StageName: Dev
       Name: JordanUserServiceAPIGateway
+      Cors:
+        AllowMethods: "'POST, GET, PUT, DELETE, OPTIONS'"
+        AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+        AllowOrigin: "'*'"
+        MaxAge: "'600'"
+        AllowCredentials: false
     Metadata:
       SamResourceId: JordanUserServiceAPIGateway
   JordanUserService:
@@ -24,7 +30,7 @@ Resources:
       Handler: com.example.UserService.LambdaHandler::handleRequest
       Runtime: java11
       Architectures:
-      - x86_64
+        - x86_64
       MemorySize: 512
       Environment:
         Variables:
@@ -36,46 +42,82 @@ Resources:
           Properties:
             Path: /users
             Method: POST
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         ListUsers:
           Type: Api
           Properties:
             Path: /users
             Method: GET
+            Cors:
+              AllowMethods: "'GET'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         GetUserById:
           Type: Api
           Properties:
             Path: /users/{userId}
             Method: GET
+            Cors:
+              AllowMethods: "'GET'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         UpdateUser:
           Type: Api
           Properties:
             Path: /users/{userId}
             Method: PUT
+            Cors:
+              AllowMethods: "'PUT'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         DeleteUser:
           Type: Api
           Properties:
             Path: /users/{userId}
             Method: DELETE
+            Cors:
+              AllowMethods: "'DELETE'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         UserAuthentication:
           Type: Api
           Properties:
             Path: /auth/login
             Method: POST
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         UserLogout:
           Type: Api
           Properties:
             Path: /auth/logout
             Method: POST
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         ChangePassword:
           Type: Api
           Properties:
             Path: /users/{userId}/changepassword
             Method: PUT
+            Cors:
+              AllowMethods: "'PUT'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
         ResetPassword:
           Type: Api
           Properties:
             Path: /users/resetpassword
             Method: POST
+            Cors:
+              AllowMethods: "'POST'"
+              AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              AllowOrigin: "'*'"
     Metadata:
       SamResourceId: JordanUserService
 Outputs:
@@ -87,11 +129,11 @@ Outputs:
     Description: Jordan-UserService Lambda Function ARN
     Value:
       Fn::GetAtt:
-      - JordanUserService
-      - Arn
+        - JordanUserService
+        - Arn
   JordanUserServiceIamRole:
     Description: Implicit IAM Role created for Jordan-UserService function
     Value:
       Fn::GetAtt:
-      - JordanUserServiceRole
-      - Arn
+        - JordanUserServiceRole
+        - Arn

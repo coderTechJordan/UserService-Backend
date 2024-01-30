@@ -1,124 +1,146 @@
 package com.example.UserService.controller;
 
-import com.example.UserService.dynamodb.PutUserItem;
+import com.example.UserService.ErrorResponse.ErrorResponse;
 import com.example.UserService.model.User;
+import com.example.UserService.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
 public class UserController {
+    private final UserService userService;
 
-    private final List<User> userList = new ArrayList<>();
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody User user) {
         try {
-            // Generate userId (you can use UUID.randomUUID().toString() or any other method)
-            String userId = UUID.randomUUID().toString();
+            System.out.println("Received request to create user: " + user);
 
-            // Generate createdAt timestamp (you can use LocalDateTime.now() or any other method)
-            String createdAt = LocalDateTime.now().toString();
+            User createdUser = userService.createUser(user);
 
-            // Set generated values in the user object
-            user.setUserId(userId);
-            user.setCreatedAt(createdAt);
+            System.out.println("User created successfully: " + createdUser);
 
-            // Placeholder logic to save the user to a database
-            userList.add(user);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
 
-            // Call the method to put the user item in DynamoDB
-            PutUserItem putUserItem = new PutUserItem();
-            putUserItem.execute(new String[]{"jordan-user-service", user.getUserId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getCreatedAt()});
-
-            // Log information
-            System.out.println("User created and added to the userList: " + user);
-
-            // Return the created user
-            return user;
+            return ResponseEntity.ok().headers(headers).body(createdUser);
         } catch (Exception e) {
-            // Log and handle the exception
             System.err.println("Error creating user: " + e.getMessage());
-            throw new RuntimeException("Error creating user", e);
+            e.printStackTrace();
+
+            ErrorResponse errorResponse = new ErrorResponse("Error creating user", e.getMessage());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(errorResponse);
         }
     }
 
     @GetMapping
-    public List<User> listUsers() {
+    public ResponseEntity<?> listUsers() {
         try {
-            // Log information
+            System.out.println("Received request to list users");
+
+            List<User> userList = (List<User>) userService.listUsers();
+
             System.out.println("Returning list of users: " + userList);
 
-            // Return the list of users (simulated from the userList)
-            return userList;
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+
+            return ResponseEntity.ok().headers(headers).body(userList);
         } catch (Exception e) {
-            // Log the exception
+
             System.err.println("Error listing users: " + e.getMessage());
-            // You may want to throw a custom exception or handle it in a way that suits your application
-            throw new RuntimeException("Error listing users", e);
+            e.printStackTrace();
+
+            ErrorResponse errorResponse = new ErrorResponse("Error listing users", e.getMessage());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(errorResponse);
         }
     }
 
     @GetMapping("/{userId}")
-    public User getUserById(@PathVariable String userId) {
+    public ResponseEntity<?> getUserById(@PathVariable String userId) {
         try {
-            // Log information
-            System.out.println("Getting user by ID: " + userId);
+            System.out.println("Received request to get user by ID: " + userId);
 
-            // Placeholder logic to retrieve a user by ID from the database (simulated from the userList)
-            return userList.stream()
-                    .filter(u -> u.getUserId().equals(userId))
-                    .findFirst()
-                    .orElse(null);
+            User user = userService.getUserById(userId);
+
+            System.out.println("User found: " + user);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+
+            return ResponseEntity.ok().headers(headers).body(user);
         } catch (Exception e) {
-            // Log the exception
+
             System.err.println("Error getting user by ID: " + e.getMessage());
-            // You may want to throw a custom exception or handle it in a way that suits your application
-            throw new RuntimeException("Error getting user by ID", e);
+            e.printStackTrace();
+
+            ErrorResponse errorResponse = new ErrorResponse("Error getting user by ID", e.getMessage());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(errorResponse);
         }
     }
 
     @PutMapping("/{userId}")
-    public User updateUser(@PathVariable String userId, @RequestBody User updatedUser) {
+    public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody User updatedUser) {
         try {
-            // Placeholder logic to update a user by ID in the database (simulated from the userList)
-            userList.removeIf(u -> u.getUserId().equals(userId));
-            updatedUser.setUserId(userId); // Set the new userId
-            userList.add(updatedUser);
+            System.out.println("Received request to update user with ID " + userId + ": " + updatedUser);
 
-            // Log information
-            System.out.println("User updated: " + updatedUser);
+            User user = userService.updateUser(userId, updatedUser);
 
-            // Return the updated user
-            return updatedUser;
+            System.out.println("User updated successfully: " + user);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+
+            return ResponseEntity.ok().headers(headers).body(user);
         } catch (Exception e) {
-            // Log the exception
             System.err.println("Error updating user: " + e.getMessage());
-            // You may want to throw a custom exception or handle it in a way that suits your application
-            throw new RuntimeException("Error updating user", e);
+            e.printStackTrace();
+
+            ErrorResponse errorResponse = new ErrorResponse("Error updating user", e.getMessage());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(errorResponse);
         }
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable String userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable String userId) {
         try {
-            // Placeholder logic to delete a user by ID from the database (simulated from the userList)
-            userList.removeIf(u -> u.getUserId().equals(userId));
+            System.out.println("Received request to delete user with ID: " + userId);
 
-            // Log information
-            System.out.println("User deleted with ID: " + userId);
+            userService.deleteUser(userId);
+
+            System.out.println("User deleted successfully with ID: " + userId);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+
+            return ResponseEntity.ok().headers(headers).build();
         } catch (Exception e) {
-            // Log the exception
             System.err.println("Error deleting user: " + e.getMessage());
-            // You may want to throw a custom exception or handle it in a way that suits your application
-            throw new RuntimeException("Error deleting user", e);
+            e.printStackTrace();
+            
+            ErrorResponse errorResponse = new ErrorResponse("Error deleting user", e.getMessage());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Access-Control-Allow-Origin", "*");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(headers).body(errorResponse);
         }
     }
-
-
-    // Other endpoint methods for authentication, password change, etc.
 }
