@@ -64,3 +64,10 @@ HELP.md
 .sam.local/
 .sam.old/
 template.yaml
+
+
+# Terraform specific files #
+############################
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup

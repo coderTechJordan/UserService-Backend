@@ -136,7 +136,7 @@ public class UserController {
         } catch (Exception e) {
             System.err.println("Error deleting user: " + e.getMessage());
             e.printStackTrace();
-            
+
             ErrorResponse errorResponse = new ErrorResponse("Error deleting user", e.getMessage());
             HttpHeaders headers = new HttpHeaders();
             headers.add("Access-Control-Allow-Origin", "*");

@@ -1,11 +1,13 @@
 package com.example.UserService.service;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.example.UserService.dynamodb.GetAllUsers;
 import com.example.UserService.dynamodb.PutUserItem;
 import com.example.UserService.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import software.amazon.awssdk.services.dynamodb.model.DynamoDbException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class UserService {
     private LambdaLogger lambdaLogger;
 
     private final List<User> userList = new ArrayList<>();
+    private static final String TABLE_NAME = "jordan-user-service";
 
     public void setLambdaLogger(LambdaLogger lambdaLogger) {
         this.lambdaLogger = lambdaLogger;
@@ -59,19 +62,16 @@ public class UserService {
 
     public List<User> listUsers() {
         try {
-            logger.info("Returning list of users: {}", userList);
+            return GetAllUsers.execute(new String[]{TABLE_NAME});
+        } catch (DynamoDbException e) {
+            logger.error("Error listing users from DynamoDB", e);
             if (lambdaLogger != null) {
-                lambdaLogger.log("Returning list of users: " + userList);
+                lambdaLogger.log("Error listing users from DynamoDB: " + e.getMessage());
             }
-            return Collections.unmodifiableList(userList);
-        } catch (Exception e) {
-            logger.error("Error listing users", e);
-            if (lambdaLogger != null) {
-                lambdaLogger.log("Error listing users: " + e.getMessage());
-            }
-            throw new RuntimeException("Error listing users", e);
+            throw new RuntimeException("Error listing users from DynamoDB", e);
         }
     }
+
 
     public User getUserById(String userId) {
         try {
