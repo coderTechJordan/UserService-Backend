@@ -5,177 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f29cc89e-cf6f-496f-85ee-15799ca5fa0f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/DeleteUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/GetAllUsers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/QueryUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/LambdaHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/UserServiceApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/dynamodb/PutUserItem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/model/NewPassword.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/model/User.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/model/UserCredentials.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/com/example/UserService/model/UserIdentification.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/ch.qos.logback.logback-classic-1.4.14.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/ch.qos.logback.logback-core-1.4.14.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.amazonaws.aws-lambda-java-core-1.2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.amazonaws.serverless.aws-serverless-java-container-core-2.0.0-M2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.amazonaws.serverless.aws-serverless-java-container-springboot3-2.0.0-M2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.classmate-1.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.core.jackson-annotations-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.core.jackson-core-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.core.jackson-databind-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.dataformat.jackson-dataformat-yaml-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.datatype.jackson-datatype-jdk8-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.datatype.jackson-datatype-jsr310-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.module.jackson-module-afterburner-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.fasterxml.jackson.module.jackson-module-parameter-names-2.15.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/com.thoughtworks.qdox.qdox-2.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/commons-codec.commons-codec-1.16.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/commons-io.commons-io-2.11.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/commons-logging.commons-logging-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.github.classgraph.classgraph-4.8.83.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.micrometer.micrometer-commons-1.12.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.micrometer.micrometer-observation-1.12.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-buffer-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-codec-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-codec-http-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-codec-http2-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-common-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-handler-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-resolver-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-transport-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-transport-classes-epoll-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.netty.netty-transport-native-unix-common-4.1.104.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-bean-validators-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-boot-starter-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-core-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-data-rest-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-oas-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-schema-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-spi-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-spring-web-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-spring-webflux-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-spring-webmvc-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-swagger-common-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-swagger-ui-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.springfox.springfox-swagger2-3.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.swagger.core.v3.swagger-annotations-2.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.swagger.core.v3.swagger-core-2.2.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.swagger.core.v3.swagger-models-2.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.swagger.swagger-annotations-1.5.20.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/io.swagger.swagger-models-1.5.20.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/jakarta.activation.jakarta.activation-api-2.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/jakarta.servlet.jakarta.servlet-api-6.1.0-M1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/jakarta.validation.jakarta.validation-api-3.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/jakarta.ws.rs.jakarta.ws.rs-api-3.1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/jakarta.xml.bind.jakarta.xml.bind-api-4.0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/javax.annotation.javax.annotation-api-1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/javax.inject.javax.inject-1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/net.bytebuddy.byte-buddy-1.14.10.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.commons.commons-fileupload2-core-2.0.0-M1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.commons.commons-fileupload2-jakarta-2.0.0-M1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.commons.commons-lang3-3.13.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.httpcomponents.httpclient-4.5.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.httpcomponents.httpcore-4.4.16.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.logging.log4j.log4j-api-2.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.logging.log4j.log4j-to-slf4j-2.21.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.maven-api-meta-4.0.0-alpha-5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.maven-api-xml-4.0.0-alpha-5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.maven-xml-impl-4.0.0-alpha-5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.plugins.maven-compiler-plugin-3.12.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.shared.maven-shared-incremental-1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.maven.shared.maven-shared-utils-3.4.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.tomcat.embed.tomcat-embed-core-10.1.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.tomcat.embed.tomcat-embed-el-10.1.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.apache.tomcat.embed.tomcat-embed-websocket-10.1.17.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-classworlds-2.5.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-compiler-api-2.14.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-compiler-javac-2.14.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-compiler-manager-2.14.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-component-annotations-1.5.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-java-1.2.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-utils-4.0.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.codehaus.plexus.plexus-xml-4.0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.eclipse.sisu.org.eclipse.sisu.inject-0.3.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.eclipse.sisu.org.eclipse.sisu.plexus-0.3.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.mapstruct.mapstruct-1.3.1.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.ow2.asm.asm-9.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.reactivestreams.reactive-streams-1.0.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.slf4j.jul-to-slf4j-2.0.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.slf4j.slf4j-api-2.0.9.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springdoc.springdoc-openapi-common-1.7.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springdoc.springdoc-openapi-ui-1.7.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springdoc.springdoc-openapi-webmvc-core-1.7.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-autoconfigure-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-starter-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-starter-json-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-starter-logging-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-starter-tomcat-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.boot.spring-boot-starter-web-2.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.cloud.spring-cloud-function-serverless-web-4.0.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.plugin.spring-plugin-core-2.0.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.plugin.spring-plugin-metadata-2.0.0.RELEASE.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-aop-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-beans-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-context-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-core-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-expression-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-jcl-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-web-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.springframework.spring-webmvc-6.1.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.webjars.swagger-ui-4.18.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/org.yaml.snakeyaml-2.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.annotations-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.apache-client-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.auth-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.aws-core-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.aws-json-protocol-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.checksums-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.checksums-spi-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.dynamodb-2.22.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.endpoints-spi-2.22.13.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.http-auth-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.http-auth-aws-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.http-auth-spi-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.http-client-spi-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.identity-spi-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.json-utils-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.metrics-spi-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.netty-nio-client-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.profiles-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.protocol-core-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.regions-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.sdk-core-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.third-party-jackson-core-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.awssdk.utils-2.23.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/JordanUserService/lib/software.amazon.eventstream.eventstream-1.0.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.aws-sam/build/template.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CloudFormationFullAccess.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.terraform.lock.hcl" beforeDir="false" afterPath="$PROJECT_DIR$/.terraform.lock.hcl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserService.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/samconfig.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/LambdaHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/LambdaHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/UserService-0.0.1-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/UserService-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/LambdaHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/UserService/LambdaHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/UserService/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/dynamodb/PutUserItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/UserService/dynamodb/PutUserItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.tf" beforeDir="false" afterPath="$PROJECT_DIR$/main.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/outputs.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/ErrorResponse/ErrorResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/ErrorResponse/ErrorResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/LambdaHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/config/SwaggerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/DeleteUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/GetAllUsers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/PutUserItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/dynamodb/QueryUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/model/NewPassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/model/NewPassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/model/UserCredentials.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/model/UserCredentials.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/model/UserIdentification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/model/UserIdentification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/UserService/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/UserService/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/UserService-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/UserService-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/LambdaHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/dynamodb/PutUserItem.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/model/NewPassword.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/model/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/model/UserCredentials.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/UserService/model/UserIdentification.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.UserService.UserServiceApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.example.UserService.UserServiceApplicationTests.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.example.UserService.UserServiceApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.example.UserService.UserServiceApplicationTests.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/variables.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,7 +78,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "container-version",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Jordan Suber/Desktop/UserService"
+    "last_opened_file_path": "C:/Users/Jordan Suber/Desktop/UserService/src/main/java/com/example"
   }
 }]]></component>
   <component name="RecentsManager">

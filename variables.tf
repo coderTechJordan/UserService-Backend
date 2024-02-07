@@ -10,5 +10,19 @@ variable "aws_region" {
 }
 
 variable "lambda_function_name" {
-  default = "jordan-get-users"
+  description = "Name of the Lambda function."
+  type        = string
+  default     = "jordan-get-users"
+}
+
+variable "lambda_function_names" {
+  description = "List of Lambda function names."
+  type        = list(string)
+  default     = []
+}
+
+variable "api_gateway_integrations" {
+  description = "Map of API Gateway integrations."
+  type        = map(string)
+  default     = {}
 }
