@@ -257,25 +257,15 @@ resource "aws_iam_policy" "lambda_policy" {
           "logs:CreateLogStream",
           "logs:PutLogEvents"
         ],
-        Resource = [
-          aws_lambda_function.create_user.arn,
-          aws_lambda_function.list_users.arn,
-          aws_lambda_function.get_user_by_id.arn,
-          aws_lambda_function.update_user.arn,
-          aws_lambda_function.delete_user.arn,
-          aws_lambda_function.user_authentication.arn,
-          aws_lambda_function.user_logout.arn,
-          aws_lambda_function.change_password.arn,
-          aws_lambda_function.reset_password.arn,
-          "arn:aws:logs:*:*:*"
-        ]
+        Resource = "*"
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_exec.name
+resource "aws_iam_policy_attachment" "lambda_policy_attachment" {
+  name       = "lambda-exec-policy-attachment"
+  roles      = [aws_iam_role.lambda_exec.name]
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
@@ -356,18 +346,6 @@ data "aws_lambda_function" "functions" {
 
   function_name = var.lambda_function_names[count.index]
 }
-
-# Add permissions for API Gateway to invoke Lambda functions
-#resource "aws_lambda_permission" "api_gw_permissions" {
-#  for_each = { for idx, integration in var.api_gateway_integrations : idx => integration }
-#
-#  statement_id  = "AllowExecutionFromHTTPAPI-${each.value}"
-#  action        = "lambda:InvokeFunction"
-#  function_name = data.aws_lambda_function.functions[each.value].arn
-#  principal     = "apigateway.amazonaws.com"
-#  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
-#}
-
 
 resource "aws_apigatewayv2_integration" "create_user" {
   api_id             = aws_apigatewayv2_api.lambda.id
@@ -496,15 +474,85 @@ resource "aws_apigatewayv2_route" "reset_password" {
   depends_on = [aws_apigatewayv2_integration.reset_password]
 }
 
+#resource "aws_lambda_permission" "api_gw" {
+#  statement_id  = "AllowExecutionFromHTTPAPI"
+#  action        = "lambda:InvokeFunction"
+#  function_name = aws_lambda_function.create_user.function_name
+#  principal     = "apigateway.amazonaws.com"
+#  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+#}
 
-resource "aws_lambda_permission" "api_gw" {
-  statement_id  = "AllowExecutionFromHTTPAPI"
+resource "aws_lambda_permission" "create_user_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPICreateUser"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create_user.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
 }
 
+resource "aws_lambda_permission" "change_password_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIChangePassword"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.change_password.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "update_user_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIUpdateUser"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.update_user.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "reset_password_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIResetPassword"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.reset_password.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "list_users_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIListUsers"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.list_users.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "user_logout_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIUserLogout"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.user_logout.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "get_user_by_id_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIGetUserById"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.get_user_by_id.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "delete_user_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIDeleteUser"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.delete_user.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
+
+resource "aws_lambda_permission" "user_authentication_api_gw" {
+  statement_id  = "AllowExecutionFromHTTPAPIUserAuthentication"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.user_authentication.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
+}
 
 resource "aws_iam_role" "api_gateway_role" {
   name = "api_gateway_lambda_role"
@@ -521,18 +569,51 @@ resource "aws_iam_role" "api_gateway_role" {
 
 resource "aws_iam_policy" "api_gateway_policy" {
   name        = "api_gateway_lambda_policy"
-  description = "Policy for API Gateway to invoke Lambda function"
+  description = "Policy for API Gateway to invoke Lambda functions"
 
   policy = jsonencode({
     Version   = "2012-10-17",
     Statement = [{
-      Effect   = "Allow",
-      Action   = "lambda:InvokeFunction",
-      Resource = aws_lambda_function.create_user.arn  # Update this line with the correct lambda function ARN
+      Effect    = "Allow",
+      Action    = "lambda:InvokeFunction",
+      Resource  = [
+        aws_lambda_function.create_user.arn,
+        aws_lambda_function.list_users.arn,
+        aws_lambda_function.get_user_by_id.arn,
+        aws_lambda_function.update_user.arn,
+        aws_lambda_function.delete_user.arn,
+        aws_lambda_function.user_authentication.arn,
+        aws_lambda_function.user_logout.arn,
+        aws_lambda_function.change_password.arn,
+        aws_lambda_function.reset_password.arn,
+      ]
     }]
   })
 }
 
+resource "aws_iam_policy" "api_gateway_invoke_lambda_policy" {
+  name        = "api_gateway_invoke_lambda_policy"
+  description = "IAM policy for API Gateway to invoke Lambda functions"
+
+  policy = jsonencode({
+    Version   = "2012-10-17",
+    Statement = [{
+      Effect    = "Allow",
+      Action    = [
+        "lambda:InvokeFunction",
+        "lambda:InvokeAsync"
+      ],
+      Resource  = "*"
+    }]
+  })
+}
+
+
+resource "aws_iam_policy_attachment" "api_gateway_invoke_lambda_attachment" {
+  name       = "api_gateway_invoke_lambda_attachment"
+  roles      = [aws_iam_role.api_gateway_role.name]
+  policy_arn = aws_iam_policy.api_gateway_invoke_lambda_policy.arn
+}
 
 resource "aws_iam_policy_attachment" "api_gateway_policy_attachment" {
   name       = "api_gateway_lambda_policy_attachment"
@@ -592,12 +673,7 @@ resource "aws_iam_role_policy_attachment" "lambda_dynamodb_policy_attachment" {
   policy_arn = aws_iam_policy.dynamodb_policy.arn
 }
 
-# Add null_resource with local-exec provisioner to print current working directory and its contents
-# resource "null_resource" "debugging" {
-#  provisioner "local-exec" {
-#    command = <<EOF
-#      pwd
-#      ls -al
-#    EOF
-#  }
-# }
+resource "aws_iam_role_policy_attachment" "api_gateway_policy_attachment" {
+  role       = aws_iam_role.api_gateway_role.name
+  policy_arn = aws_iam_policy.api_gateway_policy.arn
+}
