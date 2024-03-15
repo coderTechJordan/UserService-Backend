@@ -36,70 +36,73 @@ resource "aws_s3_bucket_acl" "lambda_bucket" {
 }
 
 # Upload the JAR file directly to S3 without archiving it
-resource "aws_s3_object" "lambda_user_service" {
+resource "aws_s3_object" "lambda_user_service_bucket" {
   bucket = aws_s3_bucket.lambda_bucket.id
   key    = "UserServiceExecutable.jar"
   source = "${path.module}/target/UserService-0.0.1-SNAPSHOT.jar"
   etag   = filemd5("${path.module}/target/UserService-0.0.1-SNAPSHOT.jar")
+
+
 }
 
 resource "aws_lambda_function" "create_user" {
-  function_name = "create-user-lambda"
+  function_name = "create-user-lambda-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.CreateUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
 
 resource "aws_lambda_function" "list_users" {
-  function_name = "list-users-lambda"
+  function_name = "list-users-lambda-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.ListUsers.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
 
 # Declare the missing lambda function resources
 resource "aws_lambda_function" "get_user_by_id" {
-  function_name = "get-user-by-id-lambda"
+  function_name = "get-user-by-id-lambda-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.GetUserById.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
 
 resource "aws_lambda_function" "update_user" {
-  function_name = "update-user-lambda"
+  function_name = "update-user-lambda-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.UpdateUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
 
 resource "aws_lambda_function" "delete_user" {
-  function_name = "delete-user-lambda"
+  function_name = "delete-user-lambda-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.DeleteUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
 
+
 resource "aws_lambda_function" "user_authentication" {
-  function_name = "user-authentication-lambda"
+  function_name = "user-auth-${var.environment}-${var.aws_region}"
   runtime       = "java17"
   handler       = "com.example.UserAuthentication.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
@@ -109,7 +112,7 @@ resource "aws_lambda_function" "user_logout" {
   runtime       = "java17"
   handler       = "com.example.UserLogout.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
@@ -119,7 +122,7 @@ resource "aws_lambda_function" "change_password" {
   runtime       = "java17"
   handler       = "com.example.ChangePassword.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
@@ -129,7 +132,7 @@ resource "aws_lambda_function" "reset_password" {
   runtime       = "java17"
   handler       = "com.example.ResetPassword.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
-  s3_key        = aws_s3_object.lambda_user_service.key
+  s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
   timeout       = 60
 }
@@ -262,6 +265,39 @@ resource "aws_iam_policy" "lambda_policy" {
     ]
   })
 }
+#     TODO: Ensure this only covers log groups used by your Lambda functions
+#
+#
+#resource "aws_iam_policy" "lambda_policy" {
+#  name        = "lambda-exec-policy"
+#  description = "Policy for allowing Lambda execution and logging"
+#
+#  policy = jsonencode({
+#    Version = "2012-10-17",
+#    Statement = [
+#      {
+#        Effect = "Allow",
+#        Action = [
+#          "lambda:InvokeFunction"
+#        ],
+#        // Scope this down to specific Lambda functions as needed
+#        Resource = "arn:aws:lambda:${var.aws_region}:${var.account_id}:function:${var.lambda_function_name_prefix}-*"
+#      },
+#      {
+#        Effect = "Allow",
+#        Action = [
+#          "logs:CreateLogGroup",
+#          "logs:CreateLogStream",
+#          "logs:PutLogEvents"
+#        ],
+#        // Ensure this only covers log groups used by your Lambda functions
+#        Resource = [
+#          "arn:aws:logs:${var.aws_region}:${var.account_id}:log-group:/aws/lambda/${var.lambda_function_name_prefix}-*:log-stream:*"
+#        ]
+#      }
+#    ]
+#  })
+#}
 
 resource "aws_iam_policy_attachment" "lambda_policy_attachment" {
   name       = "lambda-exec-policy-attachment"

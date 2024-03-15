@@ -26,3 +26,15 @@ variable "api_gateway_integrations" {
   type        = map(string)
   default     = {}
 }
+
+variable "environment" {
+  default = "dev"
+}
+
+variable "account_id" {
+  default = ""
+}
+
+variable "lambda_function_name_prefix" {
+  default = ""
+}
