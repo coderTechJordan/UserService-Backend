@@ -16,9 +16,37 @@ resource "random_pet" "lambda_bucket" {
   length = 4
 }
 
+
 resource "aws_s3_bucket" "lambda_bucket" {
   bucket = random_pet.lambda_bucket.id
 }
+
+# TODO
+## S3 bucket with encryption and public access block
+#resource "aws_s3_bucket" "lambda_bucket" {
+#  bucket = random_pet.lambda_bucket.id
+#
+#  # Public access block configurations and other settings
+#  public_access_block_configuration {
+#    block_public_acls   = true
+#    block_public_policy = true
+#    ignore_public_acls  = true
+#    restrict_public_buckets = true
+#  }
+#}
+#
+## Separate resource block for server-side encryption configuration
+#resource "aws_s3_bucket_server_side_encryption_configuration" "s3_encryption" {
+#  bucket = aws_s3_bucket.lambda_bucket.id
+#
+#  rule {
+#    apply_server_side_encryption_by_default {
+#      sse_algorithm     = "aws:kms"
+#      # Replace with the ARN of your KMS key or omit to use the default AWS managed S3 KMS key TODO
+#      kms_master_key_id = "alias/aws/s3"
+#    }
+#  }
+#}
 
 resource "aws_s3_bucket_ownership_controls" "lambda_bucket" {
   bucket = aws_s3_bucket.lambda_bucket.id
@@ -236,24 +264,6 @@ resource "aws_iam_role" "lambda_exec" {
     }]
   })
 }
-
-#resource "aws_iam_role" "serverless_lambda" {
-#  name = "serverless_lambda"
-#
-#  assume_role_policy = jsonencode({
-#    Version = "2012-10-17",
-#    Statement = [
-#      {
-#        Action = "sts:AssumeRole",
-#        Effect = "Allow",
-#        Principal = {
-#          Service = "lambda.amazonaws.com"
-#        },
-#        Sid = ""
-#      },
-#    ],
-#  })
-#}
 
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_exec.name
@@ -683,13 +693,6 @@ resource "aws_iam_role_policy_attachment" "dynamodb_unified_access_attachment_la
   role       = aws_iam_role.lambda_exec.name
   policy_arn = aws_iam_policy.dynamodb_unified_access_policy.arn
 }
-
-#resource "aws_iam_role_policy_attachment" "dynamodb_unified_access_attachment_serverless_lambda" {
-#  role       = aws_iam_role.serverless_lambda.name  # Ensure this role is defined as shown above
-#  policy_arn = aws_iam_policy.dynamodb_unified_access_policy.arn
-#}
-
-
 
 resource "aws_iam_role_policy_attachment" "api_gateway_policy_attachment" {
   role       = aws_iam_role.api_gateway_role.name

@@ -31,25 +31,82 @@ function App() {
 
 ## API Reference
 
-#### Get all items
-
+#### Create User
 ```http
-  GET /api/items
+  POST /users
 ```
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
 
-#### Get item
+| Parameter  | Type     | Description                                  |
+|:-----------|:---------|:---------------------------------------------|
+| `username` | `string` | **Required**. The username of the user.      |
+| `password` | `string` | **Required**. The password for the account.  |
+| `email`    | `string` | **Required**. The email address of the user. |
 
+#### List Users
 ```http
-  GET /api/items/${id}
+  GET /users
 ```
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of item to fetch |
+#### Get User by ID
+```http
+  GET /users/{userId}
+```
+
+| Parameter | Type            | Description                                |
+|:----------|:----------------|:-------------------------------------------|
+| `userId`  | `string` (UUID) | **Required**. The ID of the user to fetch. |
+
+#### Update User
+```http
+  PUT /users/{userId}
+```
+
+| Parameter | Type            | Description                                 |
+|:----------|:----------------|:--------------------------------------------|
+| `userId`  | `string` (UUID) | **Required**. The ID of the user to update. |
+#### Delete User
+```http
+  DELETE /users/{userId}
+```
+
+| Parameter | Type            | Description                                 |
+|:----------|:----------------|:--------------------------------------------|
+| `userId`  | `string` (UUID) | **Required**. The ID of the user to delete. |
+
+#### User Authentication
+```http
+  POST /auth/login
+```
+
+| Parameter  | Type     | Description                             |
+|:-----------|:---------|:----------------------------------------|
+| `username` | `string` | **Required**. The username of the user. |
+| `password` | `string` | **Required**. The password of the user. |
+
+#### User Logout
+```http
+  POST /auth/logout
+```
+
+#### Change Password
+```http
+  PUT /users/{userId}/changepassword
+```
+
+| Parameter     | Type            | Description                       |
+|:--------------|:----------------|:----------------------------------|
+| `userId`      | `string` (UUID) | **Required**. The ID of the user. |
+| `newPassword` | `string`        | **Required**. The new password.   |
+
+#### Reset Password
+```http
+  POST /users/resetpassword
+```
+
+| Parameter | Type     | Description                                                        |
+|:----------|:---------|:-------------------------------------------------------------------|
+| `email`   | `string` | **Required**. The email address of the user to reset the password. |
 
 #### add(num1, num2)
 
