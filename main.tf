@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "random_pet" "lambda_bucket" {
-  prefix = "jordan-terraform-bucket"
+  prefix = var.s3_bucket_prefix
   length = 4
 }
 
@@ -30,164 +30,161 @@ resource "aws_s3_bucket_ownership_controls" "lambda_bucket" {
 
 resource "aws_s3_bucket_acl" "lambda_bucket" {
   depends_on = [aws_s3_bucket_ownership_controls.lambda_bucket]
-
-  bucket = aws_s3_bucket.lambda_bucket.id
-  acl    = "private"
+  bucket     = aws_s3_bucket.lambda_bucket.id
+  acl        = "private"
 }
 
 # Upload the JAR file directly to S3 without archiving it
 resource "aws_s3_object" "lambda_user_service_bucket" {
   bucket = aws_s3_bucket.lambda_bucket.id
-  key    = "UserServiceExecutable.jar"
-  source = "${path.module}/target/UserService-0.0.1-SNAPSHOT.jar"
-  etag   = filemd5("${path.module}/target/UserService-0.0.1-SNAPSHOT.jar")
-
-
+  key    = var.jar_file_key
+  source = var.jar_file_source_path
+  etag   = filemd5(var.jar_file_source_path)
 }
 
 resource "aws_lambda_function" "create_user" {
   function_name = "create-user-lambda-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.CreateUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "list_users" {
   function_name = "list-users-lambda-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.ListUsers.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 # Declare the missing lambda function resources
 resource "aws_lambda_function" "get_user_by_id" {
   function_name = "get-user-by-id-lambda-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.GetUserById.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "update_user" {
   function_name = "update-user-lambda-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.UpdateUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "delete_user" {
   function_name = "delete-user-lambda-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.DeleteUser.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 
 resource "aws_lambda_function" "user_authentication" {
   function_name = "user-auth-${var.environment}-${var.aws_region}"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.UserAuthentication.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "user_logout" {
   function_name = "user-logout-lambda"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.UserLogout.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "change_password" {
   function_name = "change-password-lambda"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.ChangePassword.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 resource "aws_lambda_function" "reset_password" {
   function_name = "reset-password-lambda"
-  runtime       = "java17"
+  runtime       = var.lambda_runtime
   handler       = "com.example.ResetPassword.LambdaHandler::handleRequest"
   s3_bucket     = aws_s3_bucket.lambda_bucket.bucket
   s3_key        = aws_s3_object.lambda_user_service_bucket.key
   role          = aws_iam_role.lambda_exec.arn
-  timeout       = 60
+  timeout       = var.lambda_timeout
 }
 
 
 # Create CloudWatch log groups for Lambda functions
 resource "aws_cloudwatch_log_group" "create_user_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.create_user.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "list_users_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.list_users.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "get_user_by_id_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.get_user_by_id.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "update_user_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.update_user.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "delete_user_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.delete_user.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "user_authentication_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.user_authentication.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "user_logout_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.user_logout.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "change_password_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.change_password.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 resource "aws_cloudwatch_log_group" "reset_password_log_group" {
   name              = "/aws/lambda/${aws_lambda_function.reset_password.function_name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 # Create CloudWatch log group for API Gateway
 resource "aws_cloudwatch_log_group" "api_gw_log_group" {
   name              = "/aws/api_gw/${aws_apigatewayv2_api.lambda.name}"
-  retention_in_days = 30
+  retention_in_days = var.cloudwatch_log_retention
 }
 
 # Attach CloudWatch log group policy to IAM role
@@ -240,6 +237,24 @@ resource "aws_iam_role" "lambda_exec" {
   })
 }
 
+#resource "aws_iam_role" "serverless_lambda" {
+#  name = "serverless_lambda"
+#
+#  assume_role_policy = jsonencode({
+#    Version = "2012-10-17",
+#    Statement = [
+#      {
+#        Action = "sts:AssumeRole",
+#        Effect = "Allow",
+#        Principal = {
+#          Service = "lambda.amazonaws.com"
+#        },
+#        Sid = ""
+#      },
+#    ],
+#  })
+#}
+
 resource "aws_iam_role_policy_attachment" "lambda_basic_execution" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
@@ -265,39 +280,6 @@ resource "aws_iam_policy" "lambda_policy" {
     ]
   })
 }
-#     TODO: Ensure this only covers log groups used by your Lambda functions
-#
-#
-#resource "aws_iam_policy" "lambda_policy" {
-#  name        = "lambda-exec-policy"
-#  description = "Policy for allowing Lambda execution and logging"
-#
-#  policy = jsonencode({
-#    Version = "2012-10-17",
-#    Statement = [
-#      {
-#        Effect = "Allow",
-#        Action = [
-#          "lambda:InvokeFunction"
-#        ],
-#        // Scope this down to specific Lambda functions as needed
-#        Resource = "arn:aws:lambda:${var.aws_region}:${var.account_id}:function:${var.lambda_function_name_prefix}-*"
-#      },
-#      {
-#        Effect = "Allow",
-#        Action = [
-#          "logs:CreateLogGroup",
-#          "logs:CreateLogStream",
-#          "logs:PutLogEvents"
-#        ],
-#        // Ensure this only covers log groups used by your Lambda functions
-#        Resource = [
-#          "arn:aws:logs:${var.aws_region}:${var.account_id}:log-group:/aws/lambda/${var.lambda_function_name_prefix}-*:log-stream:*"
-#        ]
-#      }
-#    ]
-#  })
-#}
 
 resource "aws_iam_policy_attachment" "lambda_policy_attachment" {
   name       = "lambda-exec-policy-attachment"
@@ -306,20 +288,20 @@ resource "aws_iam_policy_attachment" "lambda_policy_attachment" {
 }
 
 resource "aws_apigatewayv2_api" "lambda" {
-  name          = "userService_lambda_gw"
+  name          = var.api_gateway_name
   protocol_type = "HTTP"
 
   cors_configuration {
-    allow_origins = ["*"]
-    allow_methods = ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-    allow_headers = ["Authorization", "Content-Type"]
-    max_age       = 3000
+    allow_origins = var.cors_allow_origins
+    allow_methods = var.cors_allow_methods
+    allow_headers = var.cors_allow_headers
+    max_age       = var.cors_max_age
   }
 }
 
 resource "aws_apigatewayv2_stage" "lambda" {
   api_id      = aws_apigatewayv2_api.lambda.id
-  name        = "dev"
+  name        = var.api_gateway_stage_name
   auto_deploy = true
 
   access_log_settings {
@@ -510,16 +492,8 @@ resource "aws_apigatewayv2_route" "reset_password" {
   depends_on = [aws_apigatewayv2_integration.reset_password]
 }
 
-#resource "aws_lambda_permission" "api_gw" {
-#  statement_id  = "AllowExecutionFromHTTPAPI"
-#  action        = "lambda:InvokeFunction"
-#  function_name = aws_lambda_function.create_user.function_name
-#  principal     = "apigateway.amazonaws.com"
-#  source_arn    = "${aws_apigatewayv2_api.lambda.execution_arn}/*/*"
-#}
-
 resource "aws_lambda_permission" "create_user_api_gw" {
-  statement_id  = "AllowExecutionFromHTTPAPICreateUser"
+  statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.create_user.function_name
   principal     = "apigateway.amazonaws.com"
@@ -681,33 +655,41 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = aws_iam_policy.lambda_logging.arn
 }
 
-resource "aws_iam_policy" "dynamodb_policy" {
-  name        = "dynamodb_access_policy"
-  description = "IAM policy for accessing DynamoDB tables"
+# DynamoDB IAM Policy Attachment
+resource "aws_iam_policy" "dynamodb_unified_access_policy" {
+  name        = "DynamoDBUnifiedAccessPolicy"
+  description = "Unified policy that allows Lambda functions to access DynamoDB"
 
   policy = jsonencode({
-    Version   = "2012-10-17",
-    Statement = [{
-      Effect   = "Allow",
-      Action   = [
-        "dynamodb:PutItem",
-        "dynamodb:GetItem",
-        "dynamodb:Query",
-        "dynamodb:Scan",
-        "dynamodb:DeleteItem"  # Include the missing action for DeleteItem
-      ],
-      Resource = [
-        "arn:aws:dynamodb:us-east-2:866934333672:table/jordan-user-service",
-        "arn:aws:dynamodb:us-east-2:866934333672:table/jordan-user-service/*"
-      ]
-    }]
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem"
+        ],
+        Resource = var.dynamodb_table_arn
+      }
+    ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_dynamodb_policy_attachment" {
+resource "aws_iam_role_policy_attachment" "dynamodb_unified_access_attachment_lambda_exec" {
   role       = aws_iam_role.lambda_exec.name
-  policy_arn = aws_iam_policy.dynamodb_policy.arn
+  policy_arn = aws_iam_policy.dynamodb_unified_access_policy.arn
 }
+
+#resource "aws_iam_role_policy_attachment" "dynamodb_unified_access_attachment_serverless_lambda" {
+#  role       = aws_iam_role.serverless_lambda.name  # Ensure this role is defined as shown above
+#  policy_arn = aws_iam_policy.dynamodb_unified_access_policy.arn
+#}
+
+
 
 resource "aws_iam_role_policy_attachment" "api_gateway_policy_attachment" {
   role       = aws_iam_role.api_gateway_role.name

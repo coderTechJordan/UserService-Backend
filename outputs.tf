@@ -58,3 +58,38 @@ output "base_urls" {
     # Add more stages if necessary
   }
 }
+
+output "api_gateway_id" {
+  description = "The ID of the deployed API Gateway."
+  value       = aws_apigatewayv2_api.lambda.id
+}
+
+output "lambda_execution_role_arn" {
+  description = "The ARN of the IAM Role used by Lambda functions."
+  value       = aws_iam_role.lambda_exec.arn
+}
+
+output "dynamodb_policy_arn" {
+  value = aws_iam_policy.dynamodb_unified_access_policy.arn
+}
+
+output "cloudwatch_log_group_names" {
+  description = "Names of the CloudWatch Log Groups for Lambda functions."
+  value = {
+    create_user_log_group        = aws_cloudwatch_log_group.create_user_log_group.name
+    list_users_log_group         = aws_cloudwatch_log_group.list_users_log_group.name
+    get_user_by_id_log_group     = aws_cloudwatch_log_group.get_user_by_id_log_group.name
+    update_user_log_group        = aws_cloudwatch_log_group.update_user_log_group.name
+    delete_user_log_group        = aws_cloudwatch_log_group.delete_user_log_group.name
+    user_authentication_log_group = aws_cloudwatch_log_group.user_authentication_log_group.name
+    user_logout_log_group        = aws_cloudwatch_log_group.user_logout_log_group.name
+    change_password_log_group    = aws_cloudwatch_log_group.change_password_log_group.name
+    reset_password_log_group     = aws_cloudwatch_log_group.reset_password_log_group.name
+  }
+}
+
+
+output "lambda_bucket_arn" {
+  description = "ARN of the S3 bucket used to store function code."
+  value       = aws_s3_bucket.lambda_bucket.arn
+}
